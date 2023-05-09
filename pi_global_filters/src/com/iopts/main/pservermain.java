@@ -9,11 +9,10 @@ import java.util.concurrent.BlockingQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.iopts.scheduler.exprotCsvData;
-import com.iopts.scheduler.licenseData;
+import com.iopts.scheduler.globalFilters;
 import com.skyun.app.util.config.AppConfig;
 
-public class exportmain {
+public class pservermain {
 	private static String CONF_PATH = null;
 	private static String LOGJ_PATH = null;
 	private static String PID = null;
@@ -28,7 +27,7 @@ public class exportmain {
 
 		LOGJ_PATH = currentDir + "/conf/logbackCsv.xml";
 		System.setProperty("logback.configurationFile", LOGJ_PATH);
-		Logger logger = LoggerFactory.getLogger(exportmain.class);
+		Logger logger = LoggerFactory.getLogger(pservermain.class);
 		AppConfig.setPID(getPID() + "");
 		wrtiePID(AppConfig.getPID());
 		
@@ -40,11 +39,11 @@ public class exportmain {
 		logger.info(">> System Version  2023-03-23__________________ ");
 		logger.info(">> System Version  2023-03-23 (Mod)__________________ ");
 		logger.info(">> System Version  2023-03-23 Patch list");
-		logger.info(">> 		1> exprot csv report");
+		logger.info(">> 		1> global filters insert");
 		logger.info(">> 		2> customer ID :: " + customer_id);
 
 
-		new licenseData();
+		new globalFilters();
 		
 		
 	}

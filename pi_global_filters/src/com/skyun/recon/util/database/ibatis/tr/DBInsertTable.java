@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.skyun.recon.util.database.ibatis.SqlMapInstance;
-import com.skyun.recon.util.database.ibatis.vo.exportCsvVo;
+import com.skyun.recon.util.database.ibatis.vo.globalFiltersVo;
 
 //Database Insert 
 public class DBInsertTable {
@@ -29,8 +29,8 @@ public class DBInsertTable {
 	public void setDBInsertTable(String trid, Object obj) {
 
 		try {
-			if (obj instanceof exportCsvVo) {
-				this.sqlMap.openSession().insert(trid, (exportCsvVo) obj);
+			if (obj instanceof globalFiltersVo) {
+				this.sqlMap.openSession().insert(trid, (globalFiltersVo) obj);
 				ret = 1;
 				sexception = "OK";
 			} else if (obj instanceof HashMap) {

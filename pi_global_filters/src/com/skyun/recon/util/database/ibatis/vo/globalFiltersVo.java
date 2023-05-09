@@ -2,19 +2,19 @@ package com.skyun.recon.util.database.ibatis.vo;
 
 import java.sql.Date;
 
-public class licenseVo {
+public class globalFiltersVo {
 	
 	private String target_id;
 	private String host_name;
 	private String data_usage;
 	private int timestamp;
 	
-	public licenseVo() {
+	public globalFiltersVo() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
-	public licenseVo(String target_id, String host_name, String data_usage, int timestamp) {
+	public globalFiltersVo(String target_id, String host_name, String data_usage, int timestamp) {
 		super();
 		this.target_id = target_id;
 		this.host_name = host_name;
