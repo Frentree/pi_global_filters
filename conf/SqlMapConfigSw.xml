@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"  
+    "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+
+
+<sqlMapConfig>
+    
+   <properties url="file:///${config.configfile.path}/server.properties" />
+   
+    
+ 	<settings
+		 useStatementNamespaces="true" 
+		 lazyLoadingEnabled="true" 
+		 useColumnLabel="true" 
+		 defaultStatementTimeout="25" 
+    />    	
+	
+    <transactionManager type="JDBC" >
+        <dataSource type="SIMPLE">
+		      <property name="JDBC.Driver" value="${config.swing.db.driver}"/>
+	 	      <property name="JDBC.ConnectionURL" value="${config.swing.db.url}"/>
+		      <property name="JDBC.Username" value="${config.swing.db.username}"/>
+		      <property name="JDBC.Password" value="${config.swing.db.password}"/>
+		      <property name="JDBC.DefaultAutoCommit" value="true" />
+			  <property name="poolMaximumActiveConnections" value="4"/>
+              <property name="poolMaximumIdleConnections" value="2"/>
+              <property name="poolMaximumCheckoutTime" value="20000"/>
+              <property name="poolPingEnabled" value="true"/>
+              <property name="poolPingQuery" value="select 1"/>
+              <property name="poolPingConnectionsNotUsedFor" value="10000"/>
+              <property name="poolTimeToWait" value="15000"/>
+        </dataSource>
+      </transactionManager>
+	<sqlMap resource="resource/sql/${config.swing.db}.dbquery.xml" />
+</sqlMapConfig>
