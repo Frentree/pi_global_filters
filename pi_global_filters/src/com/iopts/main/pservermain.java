@@ -25,7 +25,7 @@ public class pservermain {
 		File f = new File(currentDir);
 		currentDir = f.getParent().toString();
 
-		LOGJ_PATH = currentDir + "/conf/logbackCsv.xml";
+		LOGJ_PATH = currentDir + "/conf/logbackFilters.xml";
 		System.setProperty("logback.configurationFile", LOGJ_PATH);
 		Logger logger = LoggerFactory.getLogger(pservermain.class);
 		AppConfig.setPID(getPID() + "");

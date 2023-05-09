@@ -1,69 +1,67 @@
 package com.skyun.recon.util.database.ibatis.vo;
 
 import java.sql.Date;
+import com.iopts.skyun.recon.vo.groupall.globalFiltersCo;
 
 public class globalFiltersVo {
 	
+	private String fiters_id;
+	private int ap_no;
+	private String type;
+	private String path;
 	private String target_id;
-	private String host_name;
-	private String data_usage;
-	private int timestamp;
+
 	
 	public globalFiltersVo() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	public globalFiltersVo(String target_id, String host_name, String data_usage, int timestamp) {
-		super();
-		this.target_id = target_id;
-		this.host_name = host_name;
-		this.data_usage = data_usage;
-		this.timestamp = timestamp;
+
+	public void setValue(globalFiltersCo c) {
+		this.fiters_id = c.getId();
+		this.type = c.getType();
+		this.path = c.getExpression();
+		this.target_id = c.getApply_to();
 	}
 
+
+	public String getFiters_id() {
+		return fiters_id;
+	}
+	public void setFiters_id(String fiters_id) {
+		this.fiters_id = fiters_id;
+	}
+	public int getAp_no() {
+		return ap_no;
+	}
+	public void setAp_no(int ap_no) {
+		this.ap_no = ap_no;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	public String getTarget_id() {
 		return target_id;
 	}
-
-
 	public void setTarget_id(String target_id) {
 		this.target_id = target_id;
 	}
 
 
-	public String getHost_name() {
-		return host_name;
-	}
-
-
-	public void setHost_name(String host_name) {
-		this.host_name = host_name;
-	}
-
-
-	public String getData_usage() {
-		return data_usage;
-	}
-
-
-	public void setData_usage(String data_usage) {
-		this.data_usage = data_usage;
-	}
-
-	public int getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(int timestamp) {
-		this.timestamp = timestamp;
-	}
-
-
 	@Override
 	public String toString() {
-		return "licenseVo [target_id=" + target_id + ", host_name=" + host_name + ", data_usage=" + data_usage
-				+ ", timestamp=" + timestamp + "]";
+		return "globalFiltersVo [fiters_id=" + fiters_id + ", ap_no=" + ap_no + ", type=" + type + ", path=" + path
+				+ ", target_id=" + target_id + "]";
 	}
 
+	
+	
 }

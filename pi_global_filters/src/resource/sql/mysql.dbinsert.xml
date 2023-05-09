@@ -3,13 +3,9 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="insert">
-<!-- 	<insert id="setLicenseData" parameterClass="com.skyun.recon.util.database.ibatis.vo.targetScanDataVo">
-		INSERT INTO pi_license_detail 
-		(GROUP_ID,TARGET_ID, HOST_NAME, DATA_USAGE, LOCATION, CREDATE)
-		VALUES 
-		('', #target_id#, #host_name#, #bytes#, '', DATE_FORMAT(FROM_UNIXTIME(#timestamp#), '%Y-%m-%d 00:00:00'))
-		ON DUPLICATE KEY UPDATE
-		 DATA_USAGE = #bytes#
+
+	<insert id="setGlobalFilters" parameterClass="com.skyun.recon.util.database.ibatis.vo.globalFiltersVo">
+		INSERT INTO skt_global_filters (fiters_id, ap_no, TYPE, path, target_id)
+		VALUES (#fiters_id#, #ap_no#, #type#, #path#, #target_id#)
 	</insert>
- -->	
 </sqlMap>

@@ -22,7 +22,9 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
 import com.ibatis.sqlmap.client.SqlMapClient;
+import com.iopts.skyun.recon.vo.groupall.globalFiltersCo;
 import com.opencsv.CSVWriter;
 import com.skyun.app.util.config.AppConfig;
 import com.skyun.app.util.config.IoptsCurl;
@@ -44,14 +46,13 @@ public class globalFilters {
 		
 		try {
 			
-			/*String str_ap_count = AppConfig.getProperty("config.recon.ap.count");
+			String str_ap_count = AppConfig.getProperty("config.recon.ap.count");
 			int ap_count = ("".equals(str_ap_count)) ? 1 : Integer.parseInt(str_ap_count);
 			
 			for(int i=0; i<ap_count; i++) {
 				executeRun(i);
-			}*/
-			
-			executeRun(ap_number);
+			}
+			/*executeRun(ap_number);*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,11 +60,14 @@ public class globalFilters {
 	
 	private void executeRun(int ap_no) {
 		
+		List<globalFiltersVo> reconFiltersList = new ArrayList<>();
 		String user = (ap_no == 0) ? AppConfig.getProperty("config.recon.user") : AppConfig.getProperty("config.recon.user_"+(ap_no+1));
 		String pass = (ap_no == 0) ? AppConfig.getProperty("config.recon.pawwsord") : AppConfig.getProperty("config.recon.pawwsord_"+(ap_no+1));
 		String ip = (ap_no == 0) ? AppConfig.getProperty("config.recon.ip") : AppConfig.getProperty("config.recon.ip_"+(ap_no+1)) ;
 		String port = AppConfig.getProperty("config.recon.port");
 		String api_ver = AppConfig.getProperty("config.recon.api.version");
+
+		this.tr = new DBInsertTable();
 		
 		try {
 			
@@ -78,13 +82,47 @@ public class globalFilters {
 			if (json_string == null || json_string.length() < 1 || json_string.contains("Resource not found.")) {
 				logger.error("Data Null Check IP or ID: " + curlurl);
 			}else {
-				logger.info("json_string >>>> " + json_string);
+				JSONArray temp1 = new JSONArray(json_string);
+				
+				for (int i = 0; i < temp1.length(); i++) {
+					Gson gson = new Gson();
+					globalFiltersCo g = gson.fromJson(temp1.get(i).toString(), globalFiltersCo.class);
+					globaFiltersAll(g, ap_no);
+				}
 			}
 			
+		} catch (ParseException e1) {
+			logger.info("ParseException");
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			logger.info("SQLException");
+			e.printStackTrace();
 		} catch (Exception e) {
+			logger.info("Exception");
 			e.printStackTrace();
 		}
+	}
 
+	private void globaFiltersAll(globalFiltersCo g, int ap_no) throws Exception {
+		List<globalFiltersVo> reconFiltersList = new ArrayList<>();
+		
+		
+		try {
+			globalFiltersVo v = new globalFiltersVo();
+			v.setValue(g);
+			v.setAp_no(ap_no);
+			logger.info("reconFiltersList >>> "  + v.toString()) ;
+			
+			tr.setDBInsertTable("insert.setGlobalFilters", v);
+			
+			if (g == null || g.getApply_to() == null) {
+				logger.info("GlobalFilters Data is null ____");
+			}
+		} catch (Exception e) {
+			logger.info("Exception");
+			e.printStackTrace();
+		}
+		
 	}
 
 }
