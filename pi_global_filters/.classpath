@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_201"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/json-20180813.jar" sourcepath="C:/Users/pkdls/.m2/repository/org/json/json/20180813/json-20180813-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore-4.4.10.jar"/>
+	<classpathentry kind="lib" path="lib/httpmime-4.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/iopts.curl.v.10.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.9.0.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.9.5.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.9.5.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/ibatis-sqlmap-2.3.4.726.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.45-bin.jar"/>
+	<classpathentry kind="lib" path="lib/quartz-2.2.3.jar"/>
+	<classpathentry kind="lib" path="lib/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-exec-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/jsoup-1.14.1.jar"/>
+	<classpathentry kind="lib" path="lib/logback-classic-1.2.10.jar"/>
+	<classpathentry kind="lib" path="lib/logback-core-1.2.10.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.32.jar"/>
+	<classpathentry kind="lib" path="lib/opencsv-5.7.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

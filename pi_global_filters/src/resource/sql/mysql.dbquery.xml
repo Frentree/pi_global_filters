@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"  "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="query">
+
+	<select id="getSearchDate" resultClass="com.skyun.recon.util.database.ibatis.vo.exportCsvVo">
+		SELECT UNIX_TIMESTAMP(#str_date#) AS 'start_date', UNIX_TIMESTAMP(#end_date#) AS 'end_date'
+	</select>
+	
+	<select id="getSearchDate2" resultClass="com.skyun.recon.util.database.ibatis.vo.exportCsvVo">
+		SELECT UNIX_TIMESTAMP(#str_date#) AS 'start_date', UNIX_TIMESTAMP(NOW()) AS 'end_date'
+	</select>
+	
+	<select id="getTargets" resultClass="com.skyun.recon.util.database.ibatis.vo.targetVo">
+		SELECT T.GROUP_ID AS group_id,
+			S.TARGET_ID as target_id,
+			IFNULL(T.NAME, 'DELETE TARGET') AS host_name
+		FROM pi_scheduled_location S, pi_targets T
+		WHERE S.TARGET_ID = T.TARGET_ID
+		GROUP BY S.TARGET_ID
+		ORDER BY S.STARTED
+	</select>
+	
+	<select id="getDeleteTargets" resultClass="com.skyun.recon.util.database.ibatis.vo.targetVo">
+		SELECT T.GROUP_ID AS group_id,
+			S.TARGET_ID as target_id,
+			IFNULL(T.NAME, 'DELETE TARGET') AS host_name
+		FROM pi_scheduled_location S
+			LEFT OUTER JOIN pi_targets T ON S.TARGET_ID = T.TARGET_ID
+		WHERE T.NAME IS NULL
+		GROUP BY S.TARGET_ID
+		ORDER BY S.STARTED
+	</select>
+	
+	<select id="getLicenseTargets" parameterClass="long" resultClass="com.skyun.recon.util.database.ibatis.vo.targetVo">
+		SELECT LD.GROUP_ID AS group_id,
+			LD.TARGET_ID as target_id,
+			LD.host_name AS host_name
+		FROM pi_license_detail LD, PI_TARGETS T
+		WHERE UNIX_TIMESTAMP(LD.CREDATE) &lt; #timestamp#
+		  AND LD.HOST_NAME = T.NAME
+		GROUP BY LD.HOST_NAME
+	</select>
+	
+	<select id="getLicenseCompare" parameterClass="com.skyun.recon.util.database.ibatis.vo.targetScanDataVo" resultClass="long">
+		SELECT IFNULL(MAX(LD.DATA_USAGE),0) AS data_usage 
+		FROM pi_license_detail LD 
+		WHERE LD.HOST_NAME = #host_name#
+		  AND UNIX_TIMESTAMP(LD.CREDATE) &lt; #timestamp#
+	</select>
+	
+	<select id="getFirst" parameterClass="com.skyun.recon.util.database.ibatis.vo.targetVo" resultClass="com.skyun.recon.util.database.ibatis.vo.targetScanDataVo">
+		SELECT LD.target_id, 
+			LD.host_name,
+			LD.location AS path, 
+			UNIX_TIMESTAMP(LD.credate) AS timestamp, 
+			LD.DATA_USAGE AS bytes
+		FROM pi_license_detail LD, 
+			(SELECT MIN(LD2.CREDATE) AS CREDATE FROM pi_license_detail LD2 WHERE LD2.HOST_NAME = #host_name#) AS LD2
+		WHERE LD.HOST_NAME = #host_name#
+		  AND LD.CREDATE = LD2.CREDATE
+	</select>
+	
+	<select id="getDate" parameterClass="map" resultClass="int">
+	 	SELECT FROM_UNIXTIME(#time#)
+	</select>
+	
+	<select id="getTimestamp" parameterClass="String" resultClass="int">
+	 	SELECT UNIX_TIMESTAMP(#timestamp#)
+	</select>
+	
+	<select id="getDateCheck" parameterClass="map" resultClass="int">
+		SELECT IFNULL(COUNT(*),0) 
+		FROM pi_license_detail LD
+		WHERE 1 = 1
+		  AND DATE(LD.CREDATE) = DATE(#time#)
+		  AND LD.HOST_NAME = #host_name#
+	</select>
+	
+	<select id="getScanData" parameterClass="map" resultClass="com.skyun.recon.util.database.ibatis.vo.targetScanDataVo">
+		SELECT LD.target_id, 
+			LD.host_name,
+			LD.location AS path, 
+			UNIX_TIMESTAMP(LD.credate) AS timestamp, 
+			LD.DATA_USAGE AS bytes
+		FROM pi_license_detail LD, 
+			(SELECT MAX(LD2.CREDATE) AS CREDATE FROM pi_license_detail LD2 WHERE LD2.HOST_NAME = #host_name# AND UNIX_TIMESTAMP(LD2.credate) &lt; UNIX_TIMESTAMP(#time#)) AS LD2
+		WHERE LD.HOST_NAME = #host_name#
+		  AND LD.CREDATE = LD2.CREDATE
+	</select>
+	
+	<select id="setDate" resultClass="com.skyun.recon.util.database.ibatis.vo.licenseVo">
+		SELECT DATE_FORMAT(LD.credate, '%Y-%m') AS CREDATE FROM pi_license_detail LD GROUP BY DATE_FORMAT(LD.credate, '%Y-%m') ORDER BY LD.CREDATE
+	</select>
+</sqlMap>
